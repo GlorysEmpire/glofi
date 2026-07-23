@@ -1,0 +1,24 @@
+{
+  "name": "glofi",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Glofi monorepo — on-chain prop trading firm (web, contracts, shared SDK)",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "contracts"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @glofi/web",
+    "build": "npm run build -w @glofi/web",
+    "lint": "npm run lint -w @glofi/web",
+    "start": "npm run start -w @glofi/web",
+    "contracts:compile": "npm run compile -w @glofi/contracts",
+    "contracts:test": "npm run test -w @glofi/contracts",
+    "typecheck": "npm run typecheck -w @glofi/web"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

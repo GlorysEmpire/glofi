@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+body {
+  background-color: #0a0e1a;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: white;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-20px) translateY(20px);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes wave2 {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+
+  50% {
+    transform: translateX(20px) translateY(-20px);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+.wave-1 {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(126, 179, 212, 0.05) 0%, transparent 60%);
+  animation: wave 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wave-2 {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 70% 30%, rgba(100, 130, 200, 0.04) 0%, transparent 50%);
+  animation: wave2 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wave-3 {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 70%, rgba(168, 200, 232, 0.03) 0%, transparent 50%);
+  animation: wave 25s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0e1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7eb3d4;
+}
