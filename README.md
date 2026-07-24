@@ -22,14 +22,14 @@ Glofi puts the firm itself on-chain so challenge terms, pool shares, and payouts
 
 ## Stack
 
-| Layer | Tools |
-|-------|--------|
-| Web app | Next.js, React, TypeScript, Tailwind CSS |
+| Layer          | Tools                                                 |
+| -------------- | ----------------------------------------------------- |
+| Web app        | Next.js, React, TypeScript, Tailwind CSS              |
 | Wallet / chain | ethers.js, MetaMask, Polygon (Amoy testnet → Mainnet) |
-| Contracts | Solidity, Hardhat |
-| Shared config | `@glofi/sdk` (addresses, ABIs, tiers) |
-| Monorepo | npm workspaces |
-| Deploy | Vercel (web), Polygon for contracts |
+| Contracts      | Solidity, Hardhat                                     |
+| Shared config  | `@glofi/sdk` (addresses, ABIs, tiers)                 |
+| Monorepo       | npm workspaces                                        |
+| Deploy         | Vercel (web), Polygon for contracts                   |
 
 ```
 apps/web          # product UI
@@ -38,12 +38,3 @@ contracts         # Solidity + Hardhat
 ```
 
 ---
-
-## Quick start
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000). Use a wallet on Polygon Amoy for on-chain actions.
