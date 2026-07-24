@@ -1,169 +1,49 @@
 # Glofi
 
-**On-chain proprietary trading firm** — traders prove skill, investors fund the pool, rules and payouts settle on Polygon.
+Fully on-chain proprietary trading firm on Polygon.
 
-| | |
-|---|---|
-| **Stage** | Testnet MVP (Polygon Amoy) |
-| **Live** | [chain-firm.vercel.app](https://chain-firm.vercel.app) |
-| **Brand** | Glofi (repo may still say “chain-firm”) |
+Traders pay a challenge fee, prove skill under fixed rules, and get funded. Investors deposit USDC into a pool and receive governance tokens. Rules, allocations, and payouts are enforced by smart contracts — not by a company that can rewrite the outcome.
+
+**Live (testnet):** [chain-firm.vercel.app](https://chain-firm.vercel.app)
 
 ---
 
-## Monorepo layout
+## Problem
 
-```
-Glofi/
-├── apps/
-│   └── web/              # Next.js dapp (primary product UI)
-├── packages/
-│   └── sdk/              # @glofi/sdk — addresses, ABIs, tiers, types
-├── contracts/            # Hardhat + Solidity
-├── docs/                 # Product brief, audit notes
-├── package.json          # npm workspaces root
-└── .env.example
-```
+Traditional prop firms and DeFi trading desks still rely on trust:
 
-### Why this shape
+- Traders hand fees to a firm that can change rules or delay payouts
+- Investors cannot see how capital is allocated or enforced on-chain
+- Challenge outcomes and profit splits often live off-chain, opaque, and reversible
 
-| Package | Role | Future |
-|---------|------|--------|
-| `apps/web` | Marketing + wallet dapp | Stay the public web surface |
-| `packages/sdk` | Shared chain config | Import from **Expo / React Native**, bots, scripts |
-| `contracts` | On-chain system of record | Audit, mainnet deploy |
-| `apps/mobile` (not yet) | Native app | Add when ready — reuse `@glofi/sdk` |
-
-Nothing chain-specific is hardcoded only inside a page. **One SDK, many clients.**
+Glofi puts the firm itself on-chain so challenge terms, pool shares, and payouts settle automatically.
 
 ---
 
-## Prerequisites
+## Stack
 
-- **Node.js 20+**
-- MetaMask (or another injected wallet) for Amoy
-- Amoy MATIC + test USDC for writes
+| Layer | Tools |
+|-------|--------|
+| Web app | Next.js, React, TypeScript, Tailwind CSS |
+| Wallet / chain | ethers.js, MetaMask, Polygon (Amoy testnet → Mainnet) |
+| Contracts | Solidity, Hardhat |
+| Shared config | `@glofi/sdk` (addresses, ABIs, tiers) |
+| Monorepo | npm workspaces |
+| Deploy | Vercel (web), Polygon for contracts |
+
+```
+apps/web          # product UI
+packages/sdk      # chain config shared by clients
+contracts         # Solidity + Hardhat
+```
 
 ---
 
 ## Quick start
 
 ```bash
-# from monorepo root
-cd ~/Glofi
 npm install
-
-# web app
 npm run dev
-# → http://localhost:3000
 ```
 
-### Useful scripts (root)
-
-| Command | What it does |
-|---------|----------------|
-| `npm run dev` | Start Next.js web |
-| `npm run build` | Production build of web |
-| `npm run lint` | ESLint web |
-| `npm run typecheck` | `tsc --noEmit` for web |
-| `npm run contracts:compile` | Hardhat compile |
-| `npm run contracts:test` | Hardhat tests |
-
-Workspace-scoped:
-
-```bash
-npm run dev -w @glofi/web
-npm run compile -w @glofi/contracts
-```
-
----
-
-## Shared SDK (`@glofi/sdk`)
-
-```ts
-import {
-  CONTRACTS,
-  NETWORK,
-  CHALLENGE_TIERS,
-  USDC_ADDRESS,
-  ADDRESSES,
-} from '@glofi/sdk'
-```
-
-Use this package from:
-
-- Next pages / hooks
-- Future mobile app
-- Ops scripts / admin tools
-
-When you redeploy a contract, update **`packages/sdk/src/addresses.ts`** (and ABIs under `packages/sdk/src/abis/` if the interface changes).
-
----
-
-## Contracts
-
-```bash
-cd contracts
-# or: npm run compile -w @glofi/contracts
-npx hardhat compile
-```
-
-- Solidity: `contracts/contracts/`
-- Deploy notes: `contracts/deployed-contracts.md`
-- Ops scripts: `contracts/scripts/`
-- Flattened audit copies: `contracts/archive/flatten/`
-
-Secrets: copy root `.env.example` → `contracts/.env` (never commit).
-
----
-
-## Working with others
-
-1. Read `docs/CLIENT_BRIEF_AND_PLAN.md` (product north star).
-2. Read `CONTRIBUTING.md` (branches, PRs, conventions).
-3. Prefer PRs into `main`; keep commits small and focused.
-4. Do not commit `.env`, private keys, or mainnet secrets.
-5. AI / agent notes: root `AGENTS.md` + `docs/CODEMAP.md`.
-
-Suggested remote (single monorepo):
-
-```bash
-# once, from Glofi root
-git init
-git remote add origin git@github.com:GlorysEmpire/glofi.git   # or your org
-```
-
-> Nested `chain-firm` / contracts remotes were removed so collab is **one repo**. History notes: `docs/REPO_HISTORY.md`.
-
----
-
-## Scaling to a mobile app
-
-When you are ready:
-
-```
-apps/
-  web/          # existing
-  mobile/       # Expo or RN — npm workspace
-packages/
-  sdk/          # already shared
-  ui/           # optional design system later
-```
-
-Mobile should import `@glofi/sdk` for addresses/ABIs and a wallet adapter (e.g. WalletConnect). No need to fork contract config.
-
----
-
-## Docs
-
-| Doc | Purpose |
-|-----|---------|
-| `docs/CLIENT_BRIEF_AND_PLAN.md` | Product, rules, roadmap |
-| `docs/AUDIT_2026-07-18.md` | Code audit snapshot |
-| `docs/CODEMAP.md` | Where code lives |
-| `CONTRIBUTING.md` | Team workflow |
-
----
-
-## License
-
-Private / MIT workspace packages — confirm before open-sourcing.
+Open [http://localhost:3000](http://localhost:3000). Use a wallet on Polygon Amoy for on-chain actions.
